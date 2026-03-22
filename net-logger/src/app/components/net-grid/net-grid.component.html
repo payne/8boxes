@@ -72,10 +72,21 @@
         <div class="cell callsign-cell">{{ participant.callsign }}</div>
         <div class="cell name-cell">{{ participant.name }}</div>
         @for (id of trainingIds; track id) {
-          <div
-            class="cell training-cell training-state"
-            [style.background-color]="getStateColor(id, getTrainingState(participant, id))">
-            {{ getTrainingState(participant, id) }}
+          <div class="cell training-cell">
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-select
+                [value]="getTrainingState(participant, id)"
+                (selectionChange)="setTrainingState(participant, id, $event.value)"
+                [style.background-color]="getStateColor(id, getTrainingState(participant, id))">
+                @if (getTrainingConfig(id); as config) {
+                  @for (state of config.states; track state.abbrev) {
+                    <mat-option [value]="state.abbrev" [style.background-color]="state.color">
+                      {{ state.abbrev }}
+                    </mat-option>
+                  }
+                }
+              </mat-select>
+            </mat-form-field>
           </div>
         }
       </div>
