@@ -74,3 +74,36 @@
 | SKYWARN | None (NO), Basic (BA), Advanced (AD) - NWS offers two levels |
 | Winlink | None (NO), Operator (OP), Gateway (GW), Sysop (SY) - different technical roles |
 | Local EOC | None (NO), Oriented (OR), Qualified (QU), Lead (LD) - local progression |
+
+---
+
+## Interaction 5
+
+**User:** Copy members.json from GitHub URL and add training data for each person with realistic ARES distributions. Add training_id and training_name fields.
+
+**Assistant:**
+1. Fetched members.json from `https://raw.githubusercontent.com/payne/ad/refs/heads/main/attendance-app/public/members.json`
+2. Created `generate-members.js` script with realistic training distributions:
+   - ICS-100/700: 85% complete (required courses)
+   - ICS-200: 55% complete
+   - ICS-800: 50% complete
+   - EC-001: 45% have some level (5% instructor)
+   - SKYWARN: 70% have some level (20% advanced)
+   - Winlink: 40% have some level (2% sysop)
+   - Local EOC: 30% have some level (3% lead)
+
+3. Generated `members.json` with 270 members, each having a `trainings` array with 8 entries containing `training_id`, `training_name`, and `state` fields.
+
+**Sample output structure:**
+```json
+{
+  "name": "Aaron Curry",
+  "callsign": "KE0QFY",
+  "clubs": ["BARC"],
+  "trainings": [
+    {"training_id": "IC1", "training_name": "ICS-100", "state": "CP"},
+    {"training_id": "IC2", "training_name": "ICS-200", "state": "CP"},
+    ...
+  ]
+}
+```
