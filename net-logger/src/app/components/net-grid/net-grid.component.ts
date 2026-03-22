@@ -6,7 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-import { Observable, startWith, switchMap, of, tap } from 'rxjs';
+import { Observable, startWith, switchMap, of } from 'rxjs';
 import { MemberService } from '../../services/member.service';
 import { Member, NetParticipant, Training, TrainingConfig } from '../../models/member.model';
 
@@ -39,9 +39,6 @@ export class NetGridComponent implements OnInit {
   inputRow: NetParticipant = this.createEmptyParticipant();
   participants: NetParticipant[] = [];
 
-  filteredMembersList: Member[] = [];
-  highlightedIndex = -1;
-
   @ViewChildren('inputCell') inputCells!: QueryList<ElementRef>;
   @ViewChild(MatAutocompleteTrigger) autocompleteTrigger!: MatAutocompleteTrigger;
 
@@ -54,10 +51,6 @@ export class NetGridComponent implements OnInit {
           return of([]);
         }
         return this.memberService.searchByCallsign(searchTerm);
-      }),
-      tap(members => {
-        this.filteredMembersList = members;
-        this.highlightedIndex = members.length > 0 ? 0 : -1;
       })
     );
 
@@ -121,20 +114,16 @@ export class NetGridComponent implements OnInit {
   onCallsignKeydown(event: KeyboardEvent): void {
     if (event.ctrlKey && event.key === 'n') {
       event.preventDefault();
-      if (this.filteredMembersList.length > 0) {
-        this.highlightedIndex = (this.highlightedIndex + 1) % this.filteredMembersList.length;
-      }
+      const arrowDown = new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true });
+      event.target?.dispatchEvent(arrowDown);
     } else if (event.ctrlKey && event.key === 'p') {
       event.preventDefault();
-      if (this.filteredMembersList.length > 0) {
-        this.highlightedIndex = this.highlightedIndex <= 0
-          ? this.filteredMembersList.length - 1
-          : this.highlightedIndex - 1;
-      }
+      const arrowUp = new KeyboardEvent('keydown', { key: 'ArrowUp', bubbles: true });
+      event.target?.dispatchEvent(arrowUp);
     } else if (event.key === 'Enter') {
       event.preventDefault();
-      if (this.autocompleteTrigger.panelOpen && this.highlightedIndex >= 0 && this.filteredMembersList.length > 0) {
-        const selectedMember = this.filteredMembersList[this.highlightedIndex];
+      if (this.autocompleteTrigger.panelOpen && this.autocompleteTrigger.activeOption) {
+        const selectedMember = this.autocompleteTrigger.activeOption.value as Member;
         this.onMemberSelected(selectedMember);
         this.autocompleteTrigger.closePanel();
       } else if (this.inputRow.callsign) {
@@ -149,7 +138,15 @@ export class NetGridComponent implements OnInit {
   }
 
   onKeydown(event: KeyboardEvent, columnIndex: number): void {
-    if (event.key === 'Enter') {
+    if (event.ctrlKey && event.key === 'n') {
+      event.preventDefault();
+      const arrowDown = new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true });
+      event.target?.dispatchEvent(arrowDown);
+    } else if (event.ctrlKey && event.key === 'p') {
+      event.preventDefault();
+      const arrowUp = new KeyboardEvent('keydown', { key: 'ArrowUp', bubbles: true });
+      event.target?.dispatchEvent(arrowUp);
+    } else if (event.key === 'Enter') {
       event.preventDefault();
       this.addParticipant();
     } else if (event.key === 'Tab') {

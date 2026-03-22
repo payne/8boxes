@@ -25,8 +25,8 @@
           #auto="matAutocomplete"
           [displayWith]="displayCallsign"
           (optionSelected)="onMemberSelected($event.option.value)">
-          @for (member of filteredMembers$ | async; track member.callsign; let i = $index) {
-            <mat-option [value]="member" [class.highlighted]="i === highlightedIndex">
+          @for (member of filteredMembers$ | async; track member.callsign) {
+            <mat-option [value]="member">
               {{ member.callsign }} - {{ member.name }}
             </mat-option>
           }
