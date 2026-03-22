@@ -1,12 +1,12 @@
-import { Component, OnInit, inject, ViewChildren, QueryList, ElementRef } from '@angular/core';
+import { Component, OnInit, inject, ViewChildren, ViewChild, QueryList, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormControl } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatAutocompleteModule, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-import { Observable, startWith, switchMap, of } from 'rxjs';
+import { Observable, startWith, switchMap, of, tap } from 'rxjs';
 import { MemberService } from '../../services/member.service';
 import { Member, NetParticipant, Training, TrainingConfig } from '../../models/member.model';
 
@@ -39,7 +39,11 @@ export class NetGridComponent implements OnInit {
   inputRow: NetParticipant = this.createEmptyParticipant();
   participants: NetParticipant[] = [];
 
+  filteredMembersList: Member[] = [];
+  highlightedIndex = -1;
+
   @ViewChildren('inputCell') inputCells!: QueryList<ElementRef>;
+  @ViewChild(MatAutocompleteTrigger) autocompleteTrigger!: MatAutocompleteTrigger;
 
   ngOnInit(): void {
     this.filteredMembers$ = this.callsignControl.valueChanges.pipe(
@@ -50,6 +54,10 @@ export class NetGridComponent implements OnInit {
           return of([]);
         }
         return this.memberService.searchByCallsign(searchTerm);
+      }),
+      tap(members => {
+        this.filteredMembersList = members;
+        this.highlightedIndex = members.length > 0 ? 0 : -1;
       })
     );
 
@@ -108,6 +116,36 @@ export class NetGridComponent implements OnInit {
     const config = this.getTrainingConfig(trainingId);
     const stateConfig = config?.states.find(s => s.abbrev === state);
     return stateConfig?.color || '#808080';
+  }
+
+  onCallsignKeydown(event: KeyboardEvent): void {
+    if (event.ctrlKey && event.key === 'n') {
+      event.preventDefault();
+      if (this.filteredMembersList.length > 0) {
+        this.highlightedIndex = (this.highlightedIndex + 1) % this.filteredMembersList.length;
+      }
+    } else if (event.ctrlKey && event.key === 'p') {
+      event.preventDefault();
+      if (this.filteredMembersList.length > 0) {
+        this.highlightedIndex = this.highlightedIndex <= 0
+          ? this.filteredMembersList.length - 1
+          : this.highlightedIndex - 1;
+      }
+    } else if (event.key === 'Enter') {
+      event.preventDefault();
+      if (this.autocompleteTrigger.panelOpen && this.highlightedIndex >= 0 && this.filteredMembersList.length > 0) {
+        const selectedMember = this.filteredMembersList[this.highlightedIndex];
+        this.onMemberSelected(selectedMember);
+        this.autocompleteTrigger.closePanel();
+      } else if (this.inputRow.callsign) {
+        this.addParticipant();
+      }
+    } else if (event.key === 'Tab') {
+      if (!event.shiftKey) {
+        event.preventDefault();
+        this.focusCell(1);
+      }
+    }
   }
 
   onKeydown(event: KeyboardEvent, columnIndex: number): void {
