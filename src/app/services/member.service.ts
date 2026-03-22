@@ -9,11 +9,13 @@ import { Member, TrainingConfig, TrainingConfigFile } from '../models/member.mod
 export class MemberService {
   private http = inject(HttpClient);
 
-  private members$: Observable<Member[]> = this.http.get<Member[]>('/members.json').pipe(
+  private readonly baseUrl = 'https://raw.githubusercontent.com/payne/8boxes/refs/heads/main';
+
+  private members$: Observable<Member[]> = this.http.get<Member[]>(`${this.baseUrl}/members.json`).pipe(
     shareReplay(1)
   );
 
-  private trainingConfig$: Observable<TrainingConfig[]> = this.http.get<TrainingConfigFile>('/training-config.json').pipe(
+  private trainingConfig$: Observable<TrainingConfig[]> = this.http.get<TrainingConfigFile>(`${this.baseUrl}/training-config.json`).pipe(
     map(config => config.trainings),
     shareReplay(1)
   );
