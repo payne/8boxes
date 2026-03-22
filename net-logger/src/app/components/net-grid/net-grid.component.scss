@@ -1,0 +1,118 @@
+.net-grid-container {
+  padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+
+  h2 {
+    margin-bottom: 20px;
+    color: #333;
+  }
+}
+
+.grid-header,
+.grid-row {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.grid-header {
+  background-color: #3f51b5;
+  color: white;
+  font-weight: 500;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+
+  .cell {
+    padding: 12px 8px;
+  }
+}
+
+.cell {
+  flex-shrink: 0;
+  padding: 4px;
+  box-sizing: border-box;
+}
+
+.callsign-cell {
+  width: 140px;
+}
+
+.name-cell {
+  width: 200px;
+}
+
+.training-cell {
+  width: 80px;
+  text-align: center;
+}
+
+.input-row {
+  background-color: #f5f5f5;
+  padding: 8px 0;
+  position: sticky;
+  top: 44px;
+  z-index: 9;
+
+  .mat-mdc-form-field {
+    margin: 0;
+    width: 100%;
+
+    .mat-mdc-form-field-subscript-wrapper {
+      display: none;
+    }
+  }
+
+  ::ng-deep {
+    .mat-mdc-form-field-infix {
+      padding-top: 8px !important;
+      padding-bottom: 8px !important;
+      min-height: 36px;
+    }
+
+    .mat-mdc-select-value {
+      color: white;
+      text-shadow: 0 0 2px rgba(0,0,0,0.5);
+    }
+
+    .mat-mdc-text-field-wrapper {
+      padding: 0 8px;
+    }
+  }
+}
+
+.participants-container {
+  max-height: calc(20 * 48px);
+  overflow-y: auto;
+}
+
+.participant-row {
+  &:nth-child(even) {
+    background-color: #fafafa;
+  }
+
+  &:hover {
+    background-color: #e3f2fd;
+  }
+
+  .cell {
+    padding: 12px 8px;
+  }
+}
+
+.training-state {
+  color: white;
+  font-weight: 500;
+  text-shadow: 0 0 2px rgba(0,0,0,0.5);
+  border-radius: 4px;
+  margin: 4px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+::ng-deep .mat-mdc-option {
+  font-size: 14px;
+}

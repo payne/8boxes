@@ -107,3 +107,47 @@
   ]
 }
 ```
+
+---
+
+## Interaction 6
+
+**User:** Create an Angular Material application that displays a grid of people taking part in a net. First row for adding people by callsign with autocomplete. Tab/Shift-Tab for column navigation. Enter adds person to net. 20 rows before scrollbar.
+
+**Assistant:** Created Angular Material application in `net-logger/` folder:
+
+**Project Structure:**
+```
+net-logger/
+├── src/app/
+│   ├── models/member.model.ts      # Interfaces
+│   ├── services/member.service.ts  # Data loading & search
+│   └── components/net-grid/        # Main grid component
+├── public/
+│   ├── members.json                # Member data
+│   └── training-config.json        # Training configurations
+```
+
+**Features Implemented:**
+1. Callsign autocomplete with partial match search (alphabetically sorted)
+2. Auto-populate name and trainings when callsign selected
+3. Tab/Shift-Tab navigation between columns
+4. Enter key adds participant (shifts to row 2, rows shift down)
+5. 20 rows visible with scrollbar after
+6. Color-coded training states per training-config.json
+7. Editable training dropdowns in input row
+
+**Commands to run:**
+```bash
+cd net-logger
+npm start
+# Open http://localhost:4200
+```
+
+**Files Created:**
+- `src/app/models/member.model.ts`
+- `src/app/services/member.service.ts`
+- `src/app/components/net-grid/net-grid.component.ts`
+- `src/app/components/net-grid/net-grid.component.html`
+- `src/app/components/net-grid/net-grid.component.scss`
+- Updated `app.component.ts`, `app.component.html`, `app.config.ts`

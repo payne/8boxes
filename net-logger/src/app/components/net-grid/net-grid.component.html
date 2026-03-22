@@ -1,0 +1,84 @@
+<div class="net-grid-container">
+  <h2>Net Logger</h2>
+
+  <!-- Header Row -->
+  <div class="grid-header">
+    <div class="cell callsign-cell">Callsign</div>
+    <div class="cell name-cell">Name</div>
+    @for (id of trainingIds; track id) {
+      <div class="cell training-cell">{{ id }}</div>
+    }
+  </div>
+
+  <!-- Input Row -->
+  <div class="grid-row input-row">
+    <div class="cell callsign-cell">
+      <mat-form-field class="full-width" appearance="outline">
+        <input
+          matInput
+          #inputCell
+          [formControl]="callsignControl"
+          [matAutocomplete]="auto"
+          (keydown)="onKeydown($event, 0)"
+          placeholder="Enter callsign">
+        <mat-autocomplete
+          #auto="matAutocomplete"
+          [displayWith]="displayCallsign"
+          (optionSelected)="onMemberSelected($event.option.value)">
+          @for (member of filteredMembers$ | async; track member.callsign) {
+            <mat-option [value]="member">
+              {{ member.callsign }} - {{ member.name }}
+            </mat-option>
+          }
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+    <div class="cell name-cell">
+      <mat-form-field class="full-width" appearance="outline">
+        <input
+          matInput
+          #inputCell
+          [(ngModel)]="inputRow.name"
+          (keydown)="onKeydown($event, 1)"
+          placeholder="Name">
+      </mat-form-field>
+    </div>
+    @for (id of trainingIds; track id; let i = $index) {
+      <div class="cell training-cell">
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-select
+            #inputCell
+            [value]="getTrainingState(inputRow, id)"
+            (selectionChange)="setTrainingState(inputRow, id, $event.value)"
+            (keydown)="onKeydown($event, i + 2)"
+            [style.background-color]="getStateColor(id, getTrainingState(inputRow, id))">
+            @if (getTrainingConfig(id); as config) {
+              @for (state of config.states; track state.abbrev) {
+                <mat-option [value]="state.abbrev" [style.background-color]="state.color">
+                  {{ state.abbrev }}
+                </mat-option>
+              }
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+    }
+  </div>
+
+  <!-- Participants List -->
+  <div class="participants-container">
+    @for (participant of participants; track participant.callsign; let i = $index) {
+      <div class="grid-row participant-row">
+        <div class="cell callsign-cell">{{ participant.callsign }}</div>
+        <div class="cell name-cell">{{ participant.name }}</div>
+        @for (id of trainingIds; track id) {
+          <div
+            class="cell training-cell training-state"
+            [style.background-color]="getStateColor(id, getTrainingState(participant, id))">
+            {{ getTrainingState(participant, id) }}
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>

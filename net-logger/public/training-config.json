@@ -1,0 +1,83 @@
+{
+  "trainings": [
+    {
+      "id": "IC1",
+      "name": "ICS-100",
+      "description": "Introduction to Incident Command System",
+      "states": [
+        { "name": "None", "abbrev": "NO", "color": "#808080" },
+        { "name": "Complete", "abbrev": "CP", "color": "#00AA00" }
+      ]
+    },
+    {
+      "id": "IC2",
+      "name": "ICS-200",
+      "description": "Basic ICS for Single Resources",
+      "states": [
+        { "name": "None", "abbrev": "NO", "color": "#808080" },
+        { "name": "Complete", "abbrev": "CP", "color": "#00AA00" }
+      ]
+    },
+    {
+      "id": "IC7",
+      "name": "ICS-700",
+      "description": "National Incident Management System (NIMS)",
+      "states": [
+        { "name": "None", "abbrev": "NO", "color": "#808080" },
+        { "name": "Complete", "abbrev": "CP", "color": "#00AA00" }
+      ]
+    },
+    {
+      "id": "IC8",
+      "name": "ICS-800",
+      "description": "National Response Framework",
+      "states": [
+        { "name": "None", "abbrev": "NO", "color": "#808080" },
+        { "name": "Complete", "abbrev": "CP", "color": "#00AA00" }
+      ]
+    },
+    {
+      "id": "EC1",
+      "name": "EC-001",
+      "description": "ARRL Emergency Communication Course",
+      "states": [
+        { "name": "None", "abbrev": "NO", "color": "#808080" },
+        { "name": "Student", "abbrev": "ST", "color": "#FFA500" },
+        { "name": "Trained", "abbrev": "TR", "color": "#00AA00" },
+        { "name": "Instructor", "abbrev": "IN", "color": "#0066CC" }
+      ]
+    },
+    {
+      "id": "SKY",
+      "name": "SKYWARN",
+      "description": "NWS Severe Weather Spotter Training",
+      "states": [
+        { "name": "None", "abbrev": "NO", "color": "#808080" },
+        { "name": "Basic", "abbrev": "BA", "color": "#00AA00" },
+        { "name": "Advanced", "abbrev": "AD", "color": "#0066CC" }
+      ]
+    },
+    {
+      "id": "WIN",
+      "name": "Winlink",
+      "description": "Digital Message Handling via Radio",
+      "states": [
+        { "name": "None", "abbrev": "NO", "color": "#808080" },
+        { "name": "Operator", "abbrev": "OP", "color": "#00AA00" },
+        { "name": "Gateway", "abbrev": "GW", "color": "#0066CC" },
+        { "name": "Sysop", "abbrev": "SY", "color": "#9900CC" }
+      ]
+    },
+    {
+      "id": "EOC",
+      "name": "Local EOC",
+      "description": "Emergency Operations Center Procedures",
+      "states": [
+        { "name": "None", "abbrev": "NO", "color": "#808080" },
+        { "name": "Oriented", "abbrev": "OR", "color": "#FFA500" },
+        { "name": "Qualified", "abbrev": "QU", "color": "#00AA00" },
+        { "name": "Lead", "abbrev": "LD", "color": "#0066CC" }
+      ]
+    }
+  ]
+}
