@@ -1,0 +1,18 @@
+{
+  "trainings": [
+    { "id": "IC1", "name": "ICS-100", "description": "Introduction to Incident Command System" },
+    { "id": "IC2", "name": "ICS-200", "description": "Basic ICS for Single Resources" },
+    { "id": "IC7", "name": "ICS-700", "description": "National Incident Management System (NIMS)" },
+    { "id": "IC8", "name": "ICS-800", "description": "National Response Framework" },
+    { "id": "EC1", "name": "EC-001", "description": "ARRL Emergency Communication Course" },
+    { "id": "SKY", "name": "SKYWARN", "description": "NWS Severe Weather Spotter Training" },
+    { "id": "WIN", "name": "Winlink", "description": "Digital Message Handling via Radio" },
+    { "id": "EOC", "name": "Local EOC", "description": "Emergency Operations Center Procedures" }
+  ],
+  "states": [
+    { "name": "None", "abbrev": "NO", "color": "#808080" },
+    { "name": "Student", "abbrev": "ST", "color": "#FFA500" },
+    { "name": "Trained", "abbrev": "TR", "color": "#00AA00" },
+    { "name": "Instructor", "abbrev": "IN", "color": "#0066CC" }
+  ]
+}
