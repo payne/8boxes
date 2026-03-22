@@ -58,3 +58,19 @@
 | Student | ST | Orange (#FFA500) |
 | Trained | TR | Green (#00AA00) |
 | Instructor | IN | Blue (#0066CC) |
+
+---
+
+## Interaction 4
+
+**User:** Assume the trainings do not have the same states. Change the JSON file so each training may have different states. Where reasonable give at least one of the trainings different states.
+
+**Assistant:** Restructured `training-config.json` so each training has its own states array. Made states appropriate to each training type:
+
+| Training | States |
+|----------|--------|
+| ICS-100, 200, 700, 800 | None (NO), Complete (CP) - FEMA courses are pass/fail |
+| EC-001 | None (NO), Student (ST), Trained (TR), Instructor (IN) - has instructor path |
+| SKYWARN | None (NO), Basic (BA), Advanced (AD) - NWS offers two levels |
+| Winlink | None (NO), Operator (OP), Gateway (GW), Sysop (SY) - different technical roles |
+| Local EOC | None (NO), Oriented (OR), Qualified (QU), Lead (LD) - local progression |
