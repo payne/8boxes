@@ -13,7 +13,8 @@
 .grid-row {
   display: flex;
   align-items: center;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid #ccc;
+  border-left: 1px solid #ccc;
 }
 
 .grid-header {
@@ -23,9 +24,11 @@
   position: sticky;
   top: 0;
   z-index: 10;
+  border-top: 1px solid #ccc;
 
   .cell {
     padding: 12px 8px;
+    border-right: 1px solid rgba(255,255,255,0.3);
   }
 }
 
@@ -33,6 +36,7 @@
   flex-shrink: 0;
   padding: 4px;
   box-sizing: border-box;
+  border-right: 1px solid #ccc;
 }
 
 .callsign-cell {
@@ -84,7 +88,44 @@
 
 .participants-container {
   max-height: calc(20 * 48px);
+  min-height: calc(20 * 48px);
   overflow-y: auto;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  position: relative;
+
+  // Horizontal row lines
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0px,
+      transparent 47px,
+      #ccc 47px,
+      #ccc 48px
+    );
+
+  // Vertical column lines overlay
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(to right, transparent 140px, #ccc 140px, #ccc 141px, transparent 141px),
+      linear-gradient(to right, transparent 340px, #ccc 340px, #ccc 341px, transparent 341px),
+      linear-gradient(to right, transparent 420px, #ccc 420px, #ccc 421px, transparent 421px),
+      linear-gradient(to right, transparent 500px, #ccc 500px, #ccc 501px, transparent 501px),
+      linear-gradient(to right, transparent 580px, #ccc 580px, #ccc 581px, transparent 581px),
+      linear-gradient(to right, transparent 660px, #ccc 660px, #ccc 661px, transparent 661px),
+      linear-gradient(to right, transparent 740px, #ccc 740px, #ccc 741px, transparent 741px),
+      linear-gradient(to right, transparent 820px, #ccc 820px, #ccc 821px, transparent 821px),
+      linear-gradient(to right, transparent 900px, #ccc 900px, #ccc 901px, transparent 901px),
+      linear-gradient(to right, transparent 980px, #ccc 980px, #ccc 981px, transparent 981px);
+  }
 }
 
 .participant-row {

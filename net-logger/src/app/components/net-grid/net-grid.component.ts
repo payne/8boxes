@@ -29,7 +29,7 @@ import { Member, NetParticipant, Training, TrainingConfig } from '../../models/m
 export class NetGridComponent implements OnInit {
   private memberService = inject(MemberService);
 
-  callsignControl = new FormControl('');
+  callsignControl = new FormControl<string | Member>('');
   filteredMembers$!: Observable<Member[]>;
   trainingConfigs: TrainingConfig[] = [];
 
@@ -45,10 +45,11 @@ export class NetGridComponent implements OnInit {
     this.filteredMembers$ = this.callsignControl.valueChanges.pipe(
       startWith(''),
       switchMap(value => {
-        if (!value || value.length < 1) {
+        const searchTerm = typeof value === 'string' ? value : value?.callsign || '';
+        if (!searchTerm || searchTerm.length < 1) {
           return of([]);
         }
-        return this.memberService.searchByCallsign(value);
+        return this.memberService.searchByCallsign(searchTerm);
       })
     );
 
